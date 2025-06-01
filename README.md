@@ -1,38 +1,43 @@
 # ELDEREASE-health-app
-<!DOCTYPE html>
-<html>
-<head>
-  <title>ElderEase 2035</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding: 50px;
-    }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px #aaa;
-      max-width: 500px;
-      margin: auto;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 10px;
-      background-color: #5b9bd5;
-      color: white;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>👵 ElderEase 2035</h1>
-    <p>Your AI Health Companion</p>
-    <button onclick="alert('Time to take your medicine! 💊')">Medication Reminder</button>
-  </div>
-</body>
-</html>
+import time
+import datetime
+from plyer import notification
+
+def remind(title, message):
+    notification.notify(
+        title=title,
+        message=message,
+        timeout=10  # shows for 10 seconds
+    )
+
+# Reminder intervals in seconds (customize as you want)
+WATER_INTERVAL = 60 * 60  # every 1 hour
+MEDICINE_INTERVAL = 60 * 180  # every 3 hours
+WALK_INTERVAL = 60 * 120  # every 2 hours
+
+# Last alert times
+last_water = time.time()
+last_medicine = time.time()
+last_walk = time.time()
+
+print("ElderEase Health Reminder is running...")
+
+while True:
+    current_time = time.time()
+
+    if current_time - last_water >= WATER_INTERVAL:
+        remind("💧 Drink Water", "Time to drink some water!")
+        last_water = current_time
+
+    if current_time - last_medicine >= MEDICINE_INTERVAL:
+        remind("💊 Take Medicine", "Time to take your medicine.")
+        last_medicine = current_time
+
+    if current_time - last_walk >= WALK_INTERVAL:
+        remind("🚶 Walk Time", "Take a short walk or stretch.")
+        last_walk = current_time
+
+    time.sleep(60)  # check every minute
+
+    
+  
